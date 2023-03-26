@@ -69,6 +69,14 @@ class DBProvider {
     : null;
    }
 
+   Future<List<EventModel>?> getAllEvents() async{
+    final db=await database;
+    final res=await db!.query('Events');
+    return res.isNotEmpty
+    ? res.map((e) => EventModel.fromJson(e)).toList()
+    : null;
+   }
+
    Future <int> updateEvent(EventModel nuevoEvent) async{
     final db=await database;
     final res=await db!.update('Events', nuevoEvent.toJson(), where: 'id=?', whereArgs: [nuevoEvent.id]);

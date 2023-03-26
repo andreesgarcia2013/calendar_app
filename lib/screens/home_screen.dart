@@ -14,22 +14,18 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final daysProvider=Provider.of<DaysProvider>(context);
     return  Scaffold(
-      body: SafeArea(
-        bottom: false,
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(daysProvider.daySelected, style:StyleSettings.h1,),
-                SizedBox(height: 10,),
-                Calendar(),
-                SizedBox(height: 10,),
-                TodoList()
-              ],
-            ),
-          ),
+      appBar: AppBar(
+        title: Text(daysProvider.daySelected, style:StyleSettings.h1,),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10),
+        child: ListView(
+          children: [
+            SizedBox(height: 10,),
+            Calendar(),
+            SizedBox(height: 10,),
+            TodoList()
+          ],
         ),
       ),
       floatingActionButton: FloatingActionButton(

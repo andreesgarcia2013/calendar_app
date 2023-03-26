@@ -1,7 +1,9 @@
 import 'package:calendar_app/providers/days_provider.dart';
+import 'package:calendar_app/providers/events_provider.dart';
 import 'package:calendar_app/utils/style_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:status_alert/status_alert.dart';
 
 class AddEvent extends StatelessWidget {
   const AddEvent({
@@ -11,11 +13,15 @@ class AddEvent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final daysProvider=Provider.of<DaysProvider>(context);
+    final eventsProvider=Provider.of<EventsProvider>(context);
+    TextEditingController descriptionController= new TextEditingController();
+    final _formKey = GlobalKey<FormState>();
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
           child: Form(
+            key: _formKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -52,10 +58,10 @@ class AddEvent extends StatelessWidget {
                 ),
                 SizedBox(height: 20,),
                 TextFormField(
+                  controller: descriptionController,
                   maxLines: null,
                   keyboardType: TextInputType.multiline,
                   style: _styleField(),
-                  
                   decoration: InputDecoration(
                     focusColor: Colors.white,
                     //add prefix icon
@@ -94,6 +100,12 @@ class AddEvent extends StatelessWidget {
                       fontWeight: FontWeight.w400,
                     ),
                   ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter some text';
+                    }
+                    return null;
+                  },
                 ),
               ],
             ),
@@ -101,8 +113,19 @@ class AddEvent extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.pop(context);
+        onPressed: () async {
+          if (_formKey.currentState!.validate()) {
+            await eventsProvider.nuevoEvent(descriptionController.text, daysProvider.daySelected);
+            Navigator.pop(context);
+            StatusAlert.show(
+              context,
+              duration: Duration(seconds: 2),
+              title: 'Evento agregado',
+              subtitle: 'daysProvider.daySelected',
+              configuration: IconConfiguration(icon: Icons.done),
+              maxWidth: 260,
+            );
+          }
         },
         child: Icon(Icons.check),
       ),

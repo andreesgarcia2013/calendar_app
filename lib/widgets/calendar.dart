@@ -1,3 +1,4 @@
+import 'package:calendar_app/providers/events_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -16,8 +17,8 @@ class _CalendarState extends State<Calendar> {
 
   @override
   Widget build(BuildContext context) {
+    final eventosListProvider=Provider.of<EventsProvider>(context, listen: false);
     return TableCalendar(
-      calendarFormat: _calendarFormat,
       firstDay: DateTime.utc(2010, 10, 16),
       lastDay: DateTime.utc(2030, 3, 14),
       focusedDay: _focusedDay,
@@ -29,6 +30,7 @@ class _CalendarState extends State<Calendar> {
         _focusedDay = focusedDay;
         final daysProvider=Provider.of<DaysProvider>(context, listen: false);
         daysProvider.setDay=_focusedDay;
+        eventosListProvider.getEventsByDay(daysProvider.daySelected);
         setState(() {
         });
       },
