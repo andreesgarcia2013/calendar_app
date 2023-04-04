@@ -121,7 +121,7 @@ class AddEvent extends StatelessWidget {
               context,
               duration: Duration(seconds: 2),
               title: 'Evento agregado',
-              subtitle: 'daysProvider.daySelected',
+              subtitle: daysProvider.daySelected,
               configuration: IconConfiguration(icon: Icons.done),
               maxWidth: 260,
             );

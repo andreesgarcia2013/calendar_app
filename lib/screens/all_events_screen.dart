@@ -3,17 +3,13 @@ import 'package:calendar_app/utils/style_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class AllEventsScreen extends StatefulWidget {
+class AllEventsScreen extends StatelessWidget {
    
-  const AllEventsScreen({Key? key}) : super(key: key);
+  AllEventsScreen({Key? key}) : super(key: key);
 
-  @override
-  State<AllEventsScreen> createState() => _AllEventsScreenState();
-}
-
-class _AllEventsScreenState extends State<AllEventsScreen> {
   @override
   bool light = false;
+
   @override
   Widget build(BuildContext context) {
     final eventosListProvider=Provider.of<EventsProvider>(context, listen: false);
@@ -38,14 +34,7 @@ class _AllEventsScreenState extends State<AllEventsScreen> {
                   ],
                 ),
               ),
-              Switch.adaptive(
-                value: light, 
-                onChanged: (value) {
-                  light=value;
-                  setState(() {
-                  });
-                },
-              ),
+              IconButton(onPressed: null, icon: Icon(Icons.arrow_forward_ios_rounded))
             ],
           )),
       )

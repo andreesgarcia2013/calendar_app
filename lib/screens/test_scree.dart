@@ -38,7 +38,7 @@ class TestScreen extends StatelessWidget {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
           showBarModalBottomSheet(
             expand: false,
@@ -46,7 +46,8 @@ class TestScreen extends StatelessWidget {
             context: context,
             builder: (context) => AddEvent());
         },
-        child: Icon(Icons.add),
+        label: Text('Add event'),
+        icon: Icon(Icons.add),
       ),
     );
   }

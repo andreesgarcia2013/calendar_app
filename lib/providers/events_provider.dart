@@ -30,6 +30,7 @@ class EventsProvider  extends ChangeNotifier{
     final id=await DBProvider.db.nuevoEvent(tempEvent);
     tempEvent.id=id;
     eventosByDay.add(tempEvent);
+    allEventos.add(tempEvent);
     notifyListeners();
   }
 

@@ -24,11 +24,36 @@ class TodoList extends StatelessWidget {
             onTap: () => print('vista Evento $index'),
             child: ListTile(
               leading: Icon(Icons.calendar_month),
-              title: Text(eventos[index].desc),
+              title: Text(
+                eventos[index].desc,
+                style: 
+                colorText(eventos[index].date, eventos[index].completed)
+                ),
             )
           )
         )
       ],
     );
+  }
+
+  TextStyle colorText(String date, int completed) {
+    var textStyle;
+    DateTime originalDate=DateTime.parse(date);
+    if (completed==1) {
+      textStyle = TextStyle(
+        decoration: TextDecoration.lineThrough,
+        color: Colors.grey
+      );
+    }else if(DateUtils.isSameDay(originalDate, DateTime.now())){
+      textStyle = TextStyle(
+        color: Colors.green,
+      );
+    }
+    else{
+      textStyle = TextStyle(
+        color: Colors.red
+      );
+    }
+    return textStyle;
   }
 }
